@@ -174,6 +174,12 @@ VITE_STRIPE_PUBLIC_KEY="pk_test_xxxxx"
 3. Récupérer la connection string dans Settings > Database > Connection string
 4. Utiliser cette URL dans `DATABASE_URL`
 
+**Note** : Les credentials Supabase sont stockés localement dans `CREDENTIALS-SUPABASE.local.txt` (non commité).
+Pour utiliser le mot de passe, incluez-le dans la connection string :
+```
+DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@db.xxxxx.supabase.co:5432/postgres"
+```
+
 #### Option B : PostgreSQL local
 
 ```bash

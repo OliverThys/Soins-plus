@@ -11,4 +11,8 @@ coverage
 tmp
 *.tsbuildinfo
 apps/api/prisma/dev.db
+# Fichiers de credentials locaux
+*CREDENTIALS*.local.txt
+*credentials*.local.txt
+*secrets*.local.txt
 
