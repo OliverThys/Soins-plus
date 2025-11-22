@@ -1,0 +1,32 @@
+name: API CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/api/**"
+      - "packages/shared/**"
+      - ".github/workflows/api.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm --filter @soins-plus/api test
+      - run: pnpm --filter @soins-plus/api build
+      - name: Deploy API container
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: soins-plus-api
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: apps/api
+

@@ -1,0 +1,240 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  email               String               @unique
+  password            String
+  firstName           String
+  lastName            String
+  nickname            String?
+  nationalRegistry    String               @map("inami")
+  phone               String
+  diplomaUrl          String
+  role                String               @default("user")
+  subscriptionActive  Boolean              @default(false)
+  stripeCustomerId    String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  certificates        Certificate[]
+  chapterProgress     ChapterProgress[]
+  trainings           Enrollment[]
+  passwordResetTokens PasswordResetToken[]
+  trainerProfile      Trainer?
+  legalTickets        LegalTicket[]
+}
+
+model Trainer {
+  id        String     @id @default(cuid())
+  userId    String?    @unique
+  bio       String?
+  expertise String[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User?      @relation(fields: [userId], references: [id])
+  trainings Training[] @relation("TrainerTrainings")
+}
+
+model Training {
+  id              String            @id @default(cuid())
+  title           String
+  summary         String
+  description     String
+  type            TrainingType
+  durationMinutes Int               @default(90)
+  trainerId       String?
+  location        String?
+  videoUrl        String?
+  link            String?
+  thumbnailUrl    String?
+  accreditation   Boolean           @default(false)
+  theme           String
+  maxParticipants Int
+  startDate       DateTime?
+  endDate         DateTime?
+  isNew           Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  certificates    Certificate[]
+  chapters        Chapter[]
+  chapterProgress ChapterProgress[]
+  enrollments     Enrollment[]
+  quiz            Quiz?
+  trainer         Trainer?          @relation("TrainerTrainings", fields: [trainerId], references: [id])
+}
+
+model Chapter {
+  id         String            @id @default(cuid())
+  title      String
+  order      Int
+  videoUrl   String?
+  duration   Int?
+  trainingId String
+  training   Training          @relation(fields: [trainingId], references: [id])
+  progress   ChapterProgress[]
+}
+
+model Quiz {
+  id           String     @id @default(cuid())
+  passingScore Int        @default(80)
+  trainingId   String     @unique
+  questions    Question[]
+  training     Training   @relation(fields: [trainingId], references: [id])
+}
+
+model Question {
+  id       String   @id @default(cuid())
+  label    String
+  multiple Boolean  @default(false)
+  quizId   String
+  answers  Answer[]
+  quiz     Quiz     @relation(fields: [quizId], references: [id])
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  label      String
+  isCorrect  Boolean  @default(false)
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+model Enrollment {
+  id            String           @id @default(cuid())
+  userId        String
+  trainingId    String
+  status        EnrollmentStatus @default(REGISTERED)
+  attendance    Boolean          @default(false)
+  score         Int?
+  completedAt   DateTime?
+  remindersSent Int              @default(0)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  certificate   Certificate?
+  training      Training         @relation(fields: [trainingId], references: [id])
+  user          User             @relation(fields: [userId], references: [id])
+}
+
+model Certificate {
+  id           String      @id @default(cuid())
+  userId       String
+  trainingId   String
+  fileUrl      String
+  issuedAt     DateTime    @default(now())
+  enrollmentId String?     @unique
+  enrollment   Enrollment? @relation(fields: [enrollmentId], references: [id])
+  training     Training    @relation(fields: [trainingId], references: [id])
+  user         User        @relation(fields: [userId], references: [id])
+}
+
+model FaqEntry {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String
+  views     Int      @default(0)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model LegalTicket {
+  id          String           @id @default(cuid())
+  userId      String?
+  name        String
+  email       String
+  phone       String?
+  subject     String
+  message     String
+  status      LegalTicketStatus @default(OPEN)
+  priority    LegalTicketPriority @default(NORMAL)
+  adminNotes  String?
+  resolvedAt  DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  user        User?            @relation(fields: [userId], references: [id])
+}
+
+enum LegalTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum LegalTicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model NewsArticle {
+  id            String    @id @default(cuid())
+  title         String
+  content       String
+  excerpt       String?
+  author        String
+  category      String?
+  tags          String[]
+  imageUrl      String?
+  publishedAt   DateTime  @default(now())
+  scheduledAt   DateTime?
+  isPublished   Boolean   @default(true)
+  views         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ChapterProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  trainingId  String
+  chapterId   String
+  completedAt DateTime @default(now())
+  chapter     Chapter  @relation(fields: [chapterId], references: [id])
+  training    Training @relation(fields: [trainingId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, chapterId])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique
+  userId     String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model AppConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String?
+  description String?
+  category    String   @default("general")
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@map("app_config")
+}
+
+enum TrainingType {
+  VIDEO
+  PRESENTIEL
+  DISTANCIEL
+}
+
+enum EnrollmentStatus {
+  REGISTERED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}

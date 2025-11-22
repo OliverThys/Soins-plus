@@ -1,0 +1,31 @@
+name: Web CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "packages/shared/**"
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm --filter @soins-plus/web build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: soins-plus-web
+          path: apps/web/dist
+      - name: Deploy Vercel
+        run: npx vercel deploy apps/web --prod --token=${{ secrets.VERCEL_TOKEN }}
+
