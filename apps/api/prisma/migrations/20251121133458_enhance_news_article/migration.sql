@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "NewsArticle" ADD COLUMN     "category" TEXT,
+ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "excerpt" TEXT,
+ADD COLUMN     "imageUrl" TEXT,
+ADD COLUMN     "isPublished" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "scheduledAt" TIMESTAMP(3),
+ADD COLUMN     "tags" TEXT[],
+ADD COLUMN     "views" INTEGER NOT NULL DEFAULT 0;

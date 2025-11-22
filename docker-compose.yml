@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: soinsplus-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: soinsplus
+      POSTGRES_PASSWORD: soinsplus_dev
+      POSTGRES_DB: soinsplus
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U soinsplus"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+

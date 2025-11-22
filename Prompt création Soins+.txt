@@ -1,0 +1,381 @@
+Développement de la plateforme SOINS+ - Module de Formation
+Contexte du projet
+Développe une plateforme web complète nommée SOINS+ dédiée aux prestataires de soins indépendants en Belgique. Cette première version (MVP) se concentre uniquement sur le module de formation continue.
+Stack technique imposé
+
+Frontend: React (application web responsive)
+Backend: Framework JavaScript moderne optimisé pour le cloud
+Hébergement: à définir
+Paiements: Stripe
+Monitoring: Sentry (erreurs) + Microsoft Clarity (analytics)
+Emails: Postmark
+Base de données: À définir (compatible cloud)
+
+Architecture à 2 plateformes
+1. PLATEFORME UTILISATEUR (Prestataires de soins)
+Module Authentification
+
+Inscription avec: nom, prénom, pseudo (optionnel), numéro INAMI, téléphone, email, upload diplôme (obligatoire)
+Connexion email/mot de passe sécurisée
+Récupération mot de passe par email
+Gestion profil avec modification des informations
+
+Module Abonnement
+
+Intégration Stripe pour souscription lors de l'inscription
+Gestion de l'abonnement (activation/désactivation)
+Notifications de renouvellement automatique
+
+Module Catalogue de Formations
+Page liste formations avec:
+
+Carte par formation: titre, image, date, type (vidéo/présentiel/distanciel), badge "NOUVEAU"
+Filtres: type, accréditation, date, thème
+Barre de recherche
+
+Page détail formation avec:
+
+Description complète
+Lieu/lien selon type
+Date et horaires
+Statut accréditation
+Nombre places (max/disponibles)
+Formateur assigné
+Bouton "S'inscrire"
+
+Module Parcours Vidéo
+
+Navigation par chapitres
+Lecteur vidéo avec: play/pause, plein écran, vitesse lecture, timeline
+Indicateur progression (chapitres visionnés)
+Validation automatique au lancement vidéo
+QCM final avec seuil configurable (défaut 80%)
+Génération automatique attestation si réussite
+
+Module "Mes Formations"
+
+Section formations à venir avec rappels email automatiques
+Historique formations complétées
+Téléchargement attestations (PDF générés automatiquement)
+Statistiques: nombre formations (en cours/terminées/à venir)
+
+Module Juridique (simple)
+
+FAQ juridique consultable
+Formulaire contact pour questions juridiques
+
+Tableau de bord
+
+Actualités utilisateur (formations en cours/à venir)
+Articles et news du secteur
+
+2. PLATEFORME ADMINISTRATION
+Gestion Formations
+Création avec champs:
+
+Titre, formateur, durée, type
+Date/heure (si applicable)
+Lieu ou lien visio
+Nombre participants max
+Description/résumé
+Accréditation (oui/non)
+Thème/catégorie
+
+Pour parcours vidéo:
+
+Création chapitres
+Upload vidéos par chapitre
+Création QCM (questions, réponses, bonnes réponses)
+Seuil validation configurable
+
+Gestion Participants
+
+Liste participants par formation
+Statuts: inscrit/présent/absent
+Export Excel/PDF des listes
+Marquage manuel présence
+Déclenchement envoi attestation
+
+Gestion Formateurs
+
+CRUD formateurs (création, modification, suppression)
+Attribution formations aux formateurs
+
+Gestion Utilisateurs
+
+Liste utilisateurs inscrits
+Activation manuelle abonnements
+Suppression utilisateurs
+
+Gestion Contenu
+
+CRUD articles/actualités avec formatage simple
+Gestion contenu FAQ juridique
+
+3. INTERFACE FORMATEUR
+
+Consultation de ses formations assignées
+Liste participants par formation
+Validation manuelle présence → génération automatique attestation
+
+Spécifications techniques critiques
+Sécurité & Conformité
+
+Authentification sécurisée (JWT ou session)
+Stockage sécurisé données personnelles
+Conformité RGPD totale
+HTTPS obligatoire
+
+Performance & UX
+
+Responsive design (mobile-first pour utilisateurs)
+Optimisation affichage mobile prioritaire
+Interface admin plus sobre/fonctionnelle
+Temps de chargement < 3 secondes
+
+Automatisations obligatoires
+
+Envoi email confirmation inscription formation
+Rappels automatiques formations à venir
+Génération PDF attestations après validation
+Envoi automatique attestations par email
+Marquage automatique formations réussies
+
+Intégrations
+
+Stripe: abonnements récurrents avec webhooks
+Postmark: emails transactionnels
+Sentry: capture erreurs temps réel
+Microsoft Clarity: heatmaps et analytics
+
+Livrables attendus
+Code source avec:
+
+Architecture modulaire et scalable
+Tests unitaires pour fonctions critiques
+Documentation API complète
+README avec instructions déploiement
+
+Configuration:
+
+Pipeline CI/CD (GitHub Actions)
+Variables environnement documentées
+Scripts déploiement Azure/Vercel
+
+Design:
+
+Maquettes Figma/design system
+Assets graphiques optimisés
+Favicon et meta tags SEO
+
+Contraintes projet
+
+
+Points d'attention critiques
+
+L'upload et validation du diplôme est OBLIGATOIRE à l'inscription
+Le système d'attestations doit être 100% automatisé
+La validation vidéo se fait dès le lancement (pas de tracking complet)
+Le QCM doit supporter paramétrage du seuil de réussite
+Les formateurs doivent pouvoir valider les présences facilement
+L'export des listes participants est indispensable
+Le système de rappels emails doit être fiable
+
+Génère le code complet de cette application en respectant TOUS les points du cahier des charges, avec une architecture professionnelle et maintenable.
+
+
+Prompt Design UI/UX pour SOINS+ - Plateforme de Formation Médicale
+Vision créative globale
+Crée une interface moderne et apaisante pour une plateforme de formation destinée aux professionnels de santé indépendants (infirmiers, sages-femmes). Le design doit inspirer confiance, professionnalisme et simplicité tout en réduisant la charge cognitive des utilisateurs souvent pressés.
+Identité visuelle
+Palette de couleurs
+Couleurs principales:
+
+Bleu médical doux (#0B6BA7 ou similaire) - confiance et santé
+Blanc pur (#FFFFFF) - propreté et clarté
+Gris clair (#F8F9FA) - arrière-plans apaisants
+
+Couleurs secondaires:
+
+Vert menthe (#10B981) - succès et validation
+Turquoise clair (#06B6D4) - accents et interactions
+Orange doux (#FB923C) - alertes et nouveautés
+Rouge discret (#EF4444) - erreurs uniquement
+
+Typographie
+
+Titres: Police sans-serif moderne et arrondie (Inter, Nunito ou Poppins)
+Corps: Police lisible optimisée écran (Inter ou Open Sans)
+Tailles: Hiérarchie claire avec 16px minimum pour le corps de texte
+Line-height: 1.5 minimum pour une lecture confortable
+
+Design patterns spécifiques
+Page d'accueil utilisateur
+Hero section:
+
+Message de bienvenue personnalisé "Bonjour [Prénom] 👋"
+Widget météo du jour de formation
+3 cartes stats: formations à venir, heures validées ce mois, prochaine échéance
+
+Dashboard principal:
+
+Disposition en grille asymétrique moderne
+Carte "Ma prochaine formation" mise en avant avec countdown
+Timeline verticale des formations récentes
+Section actualités avec cards horizontales scrollables
+
+Catalogue de formations
+Layout:
+
+Grille de cartes avec effet hover subtil (légère élévation)
+Filtres latéraux collapsibles sur mobile
+Barre de recherche sticky avec auto-suggestions
+
+Design des cartes formation:
+┌─────────────────────┐
+│ [Image de couverture]│ ← Image avec overlay gradient
+│ Badge "NOUVEAU"      │ ← Positionné en haut à droite
+│                      │
+│ Titre de formation   │ ← Font-weight: 600
+│ 📅 12 juin • 14h    │ ← Icônes colorées
+│ 📍 Présentiel       │
+│ 👥 8/12 places      │
+│                      │
+│ [Bouton S'inscrire] │ ← Bouton arrondi avec micro-animation
+└─────────────────────┘
+Parcours vidéo (capsules)
+Player vidéo custom:
+
+Design épuré façon Netflix/Udemy
+Timeline chapitres visible sous la vidéo
+Sidebar droite avec liste chapitres (checkmarks verts si complétés)
+Mode théâtre et plein écran
+Boutons arrondis avec icônes modernes (Feather ou Heroicons)
+
+Progression visuelle:
+
+Barre de progression globale en haut (style LinkedIn Learning)
+Animation confettis discrets à la complétion d'un chapitre
+Badge de réussite animé après QCM validé
+
+Interface mobile-first
+Navigation:
+
+Bottom navigation bar avec 4 icônes max
+Menu hamburger transformé en drawer plein écran
+Gestes swipe pour navigation entre sections
+
+Adaptations mobiles:
+
+Cards empilées verticalement
+Filtres en bottom sheet
+Actions principales en FAB (Floating Action Button)
+Touch targets minimum 44x44px
+
+Composants UI spécifiques
+Boutons
+
+Primaire: Fond bleu, texte blanc, coins arrondis (8px), ombre douce
+Secondaire: Bordure bleue, fond transparent, hover avec fond bleu 10%
+États: Hover, Active, Disabled, Loading avec spinner intégré
+
+Formulaires
+
+Labels flottants (Material Design inspired)
+Validation en temps réel avec feedback visuel
+Messages d'erreur avec icônes et couleur orange (pas rouge agressif)
+Champs avec bordures arrondies et focus bleu
+
+Notifications/Toasts
+
+Position: top-right desktop, bottom mobile
+Animation slide-in élégante
+Auto-dismiss après 5 secondes
+Couleurs selon type (succès vert, info bleu, warning orange)
+
+Modales
+
+Backdrop flou (blur effect)
+Animation scale + fade
+Croix de fermeture toujours visible
+Responsive: fullscreen sur mobile
+
+Micro-interactions et animations
+Animations subtiles
+
+Transitions douces (300ms cubic-bezier)
+Hover effects sur tous les éléments cliquables
+Skeleton screens pendant le chargement
+Pull-to-refresh sur mobile
+Parallax léger sur les headers
+
+Feedback utilisateur
+
+Ripple effect sur les boutons (Material Design)
+Progress rings pour les uploads
+Success checkmarks animés (style Stripe)
+Smooth scrolling entre sections
+
+Accessibilité (WCAG AA)
+
+Contraste minimum 4.5:1 pour texte normal
+Contraste 3:1 pour texte large
+Focus visible sur tous les éléments interactifs
+Alt texts sur toutes les images
+Navigation clavier complète
+Mode sombre optionnel
+
+Pages spéciales
+Page 404/Erreur
+
+Illustration médicale sympathique (infirmière perdue)
+Message rassurant et humoristique
+Bouton retour évident
+Suggestions de pages populaires
+
+Onboarding
+
+Stepper visuel en 4 étapes maximum
+Illustrations personnalisées santé
+Skip option discrète
+Barre de progression
+
+Tableau de bord admin
+
+Design plus dense et fonctionnel
+Tables avec tri/filtre avancés
+Graphiques avec Chart.js stylisés
+Sidebar navigation fixe
+Mode compact disponible
+
+Assets visuels
+
+Illustrations: Style flat moderne, personnages diversifiés en tenue médicale
+Icônes: Ensemble cohérent (Feather Icons ou Heroicons)
+Photos: Professionnels de santé en situation, lumineuses et chaleureuses
+Patterns: Motifs géométriques subtils pour backgrounds
+
+Responsive breakpoints
+
+Mobile: 320px - 768px
+Tablet: 768px - 1024px
+Desktop: 1024px - 1440px
+Wide: 1440px+
+
+Performance visuelle
+
+Images lazy loading avec placeholders flous
+Formats modernes (WebP, AVIF)
+CSS critique inline
+Fonts avec font-display: swap
+Animations désactivables (prefers-reduced-motion)
+
+Exemples d'inspiration
+
+Navigation: Comme Duolingo (gamifiée et claire)
+Cards: Style Airbnb (épurées et informatives)
+Video player: Comme Masterclass (premium et fonctionnel)
+Dashboard: Inspiration Notion (modulaire et personnalisable)
+Forms: Material Design Google (familier et intuitif)
+
+Génère un design system complet avec ces spécifications, incluant les maquettes Figma/Sketch, le guide de style, et les composants réutilisables. L'objectif est une expérience utilisateur fluide qui réduit la friction et rend la formation continue agréable plutôt qu'une corvée administrative.
