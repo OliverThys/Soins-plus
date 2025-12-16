@@ -1,6 +1,6 @@
 {
   "name": "soins-plus",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Plateforme SOINS+ - module de formation continue pour prestataires de soins en Belgique",
   "packageManager": "pnpm@10.22.0",
