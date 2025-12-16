@@ -34,3 +34,5 @@ Une fois que vous avez le `whsec_...`, allez sur `/admin/configuration` et rempl
 - ID Prix Annuel : `price_...`
 
 
+
+

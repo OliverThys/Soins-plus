@@ -1,0 +1,35 @@
+# ============================================
+# FICHIER .env COMPLET POUR apps/web/.env
+# ============================================
+# Copiez ce contenu dans apps/web/.env
+# ============================================
+
+# ============================================
+# API BACKEND
+# ============================================
+# URL de l'API backend
+# Développement: http://localhost:4000
+# Production: https://api.soins-plus.com
+VITE_API_URL="http://localhost:4000"
+
+# ============================================
+# SENTRY (MONITORING D'ERREURS)
+# ============================================
+# DSN Sentry - Optionnel en développement
+# Même DSN que le backend (ou différent si projets séparés)
+VITE_SENTRY_DSN=""
+
+# ============================================
+# MICROSOFT CLARITY (ANALYTICS)
+# ============================================
+# Project ID Clarity - Optionnel en développement
+# Même Project ID que le backend
+VITE_CLARITY_ID=""
+
+# ============================================
+# STRIPE (PAIEMENTS)
+# ============================================
+# Clé publique Stripe (pk_test_xxx ou pk_live_xxx)
+# Récupérer sur: https://dashboard.stripe.com/test/apikeys
+VITE_STRIPE_PUBLIC_KEY="pk_test_xxxxx"
+

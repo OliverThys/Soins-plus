@@ -1,0 +1,79 @@
+# ============================================
+# FICHIER .env COMPLET POUR apps/api/.env
+# ============================================
+# Copiez ce contenu dans apps/api/.env
+# ============================================
+
+# ============================================
+# BASE DE DONNÉES - SUPABASE
+# ============================================
+# Connection string Supabase (projet: yriiklceyghtymxfjdst)
+DATABASE_URL="postgresql://postgres:lUgZCOXhNEb00voM@db.yriiklceyghtymxfjdst.supabase.co:5432/postgres"
+
+# ============================================
+# SERVEUR
+# ============================================
+PORT=4000
+FRONTEND_URL="http://localhost:5173"
+
+# ============================================
+# JWT (AUTHENTIFICATION)
+# ============================================
+# Secrets JWT pour l'authentification
+JWT_ACCESS_SECRET="dev-secret-key-change-in-production-12345"
+JWT_REFRESH_SECRET="dev-refresh-secret-key-change-in-production-12345"
+
+# ============================================
+# STRIPE (PAIEMENTS)
+# ============================================
+# Clés Stripe - Mode test pour développement
+# Récupérer sur: https://dashboard.stripe.com/test/apikeys
+STRIPE_SECRET_KEY="sk_test_xxxxx"
+STRIPE_WEBHOOK_SECRET="whsec_xxxxx"
+STRIPE_PRICE_ID_MONTHLY="price_xxxxx"
+STRIPE_PRICE_ID_YEARLY="price_xxxxx"
+
+# ============================================
+# POSTMARK (EMAILS)
+# ============================================
+# Token API Postmark
+# Récupérer sur: https://account.postmarkapp.com/servers/xxxxx/api_tokens
+POSTMARK_TOKEN="xxxxx"
+
+# ============================================
+# SENTRY (MONITORING D'ERREURS)
+# ============================================
+# DSN Sentry - Optionnel en développement
+# Récupérer sur: https://sentry.io/settings/projects/soins-plus/keys/
+SENTRY_DSN=""
+
+# ============================================
+# MICROSOFT CLARITY (ANALYTICS)
+# ============================================
+# Project ID Clarity - Optionnel en développement
+# Récupérer sur: https://clarity.microsoft.com/projects
+CLARITY_PROJECT_ID=""
+
+# ============================================
+# STOCKAGE (AZURE BLOB STORAGE)
+# ============================================
+# URL du compte de stockage Azure - Optionnel en développement
+STORAGE_URL=""
+STORAGE_SAS=""
+
+# ============================================
+# REDIS (CACHE - OPTIONNEL)
+# ============================================
+# URL Redis pour le cache - Optionnel
+# Format: redis://HOST:PORT
+REDIS_URL="redis://localhost:6379"
+
+# ============================================
+# CLAMAV (SCAN ANTIVIRUS - OPTIONNEL)
+# ============================================
+# Configuration ClamAV - Optionnel en développement
+# En développement, peut être omis (les fichiers seront acceptés sans scan)
+CLAMAV_HOST="localhost"
+CLAMAV_PORT=3310
+CLAMAV_TIMEOUT=30000
+
